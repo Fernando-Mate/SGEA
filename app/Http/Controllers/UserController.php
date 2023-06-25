@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Escala;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -72,16 +73,7 @@ class UserController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -127,4 +119,44 @@ class UserController extends Controller
         return redirect()->route('utilizador')->with('mensagem', 'Utilizador eliminado com sucesso!');
 
     }
+
+
+    public function addToEscala(Request $request, User $usuario)
+    {
+        $escalaId = $request->input('escala_id');
+
+        if ($usuario->Escala->isEmpty()) {
+            $escala = Escala::find($escalaId);
+
+            if ($escala) {
+                $usuario->Escala()->attach($escala);
+            }
+
+            return redirect()->back();
+        } else {
+            return redirect()->route('home')->with('mensagem', 'Usuario ja esta associado a uma Escala');
+
+        }
+    }
+
+    public function removeFromEscala(Request $request, User $usuario)
+    {
+        $escalaId = $request->input('escala_id');
+
+        $escala = Escala::find($escalaId);
+
+        if ($escala) {
+            $usuario->Escala()->detach($escala);
+        }
+
+        return redirect()->back();
+    }
+
+    public function show(User $usuario)
+    {
+        $escalasDisponiveis = Escala::whereNotIn('id', $usuario->Escala()->pluck('id'))->get();
+
+        return view('usuario.show', compact('usuario', 'escalasDisponiveis'));
+    }
+
 }

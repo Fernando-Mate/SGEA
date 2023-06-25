@@ -19,9 +19,13 @@ use Illuminate\Support\Facades\Route;
 Route::post('/addFuncionario', [UserController::class, 'storeFuncionario'])->name('addFuncionario');
 Route::post('/addAdmin', [UserController::class, 'storeAdmin'])->name('addAdmin');
 Route::get('/funcionario', [UserController::class, 'index'])->name('funcionario');
-Route::get('/delete/{id}', [UserController::class, 'destroy'])->name('deleteUser');
-Route::get('/update/{id}', [UserController::class, 'update'])->name('updateUser');
+Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('deleteUser');
+Route::put('/update/{id}', [UserController::class, 'update'])->name('updateUser');
 
 //ROUTAS DAS ESCALAS
 Route::post('/addEscala', [EscalaController::class, 'storeEscala'])->name('addEscala');
-Route::post('/update', [EscalaController::class, 'update'])->name('updateEscala');
+Route::put('/update', [EscalaController::class, 'update'])->name('updateEscala');
+
+//Alocação
+Route::post('/usuarios/{usuario}/departamentos/add', [UserController::class, 'addToEscala'])->name('usuarios.departamentos.add');
+Route::post('/usuarios/{usuario}/departamentos/remove', [UserController::class, 'removeFromEscala'])->name('usuarios.departamentos.remove');
