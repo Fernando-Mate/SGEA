@@ -37,7 +37,7 @@
                         <td>{{$user->email}}</td>
                         <td>
                             <button class="btn btn-primary btnEditar" data-bs-toggle="modal" data-bs-target="#addAgenteModal{{$user->id}}"><i class="bi bi-pencil-square"></i></button>
-                            <a href="{{route('deleteUser', ['id' => $user->id])}}" class="btn btn-danger btnEliminar"><i class="bi bi-trash"></i></a>
+                            <a href="{{route('deleteAgente', ['id' => $user->id])}}" class="btn btn-danger btnEliminar"><i class="bi bi-trash"></i></a>
                         </td>
                     </tr>
 

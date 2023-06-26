@@ -21,14 +21,14 @@ use Illuminate\Support\Facades\Route;
 Route::post('/addFuncionario', [UserController::class, 'storeFuncionario'])->name('addFuncionario');
 Route::post('/addAdmin', [UserController::class, 'storeAdmin'])->name('addAdmin');
 Route::get('/funcionario', [UserController::class, 'index'])->name('funcionario');
-Route::get('/delete/{id}', [UserController::class, 'destroy'])->name('deleteUser');
+Route::get('/deleteAgente/{id}', [UserController::class, 'destroy'])->name('deleteAgente');
 Route::post('/updateAgente', [UserController::class, 'update'])->name('updateUser');
 
 //ROUTAS DAS ESCALAS
 Route::post('/addEscala', [EscalaController::class, 'storeEscala'])->name('addEscala');
 Route::post('/updateEscala', [EscalaController::class, 'update'])->name('updateEscala');
 Route::get('/escala', [EscalaController::class, 'index'])->name('escala');
-Route::get('/delete/{id}', [EscalaController::class, 'destroy'])->name('deleteEscala');
+Route::get('/deleteEscala/{id}', [EscalaController::class, 'destroy'])->name('deleteEscala');
 
 //Alocação
 Route::post('/usuarios/{usuario}/departamentos/add', [UserController::class, 'addToEscala'])->name('usuarios.departamentos.add');
