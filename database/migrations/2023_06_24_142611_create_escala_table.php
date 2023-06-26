@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->date('data');
             $table->integer('nr_agentes');
-            $table->date('locais');
-            $table->date('chefe_grupo');
+            $table->string('local');
+            $table->integer('chefe_grupo');
             $table->timestamps();
         });
     }

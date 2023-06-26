@@ -5,9 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Escala;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EscalaController extends Controller
 {
+
+    private $objUtilizador;
+    private $objEscala;
+    public function __construct()
+    {
+        $this->objUtilizador = new User();
+        $this->objEscala = new Escala();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +25,14 @@ class EscalaController extends Controller
      */
     public function index()
     {
-        //
+        $utilizadores = $this->objUtilizador->all()->where('nivelAcesso', '=', 'agente');
+        $escalas = DB::table('escala')
+            ->join('users', 'users.id', '=', 'escala.chefe_grupo')
+            ->select('escala.*', 'users.name')
+            ->get();
+
+            // return dump($escalas);
+        return view('Escalas', compact('utilizadores', 'escalas'));
     }
 
     /**
@@ -39,11 +56,10 @@ class EscalaController extends Controller
         $escala = new Escala();
         $escala->data = $request->input('data');
         $escala->nr_agentes = $request->input('nr_agentes');
-        $escala->locais = $request->input('locais');
+        $escala->local = $request->input('locais');
         $escala->chefe_grupo = $request->input('chefe_grupo');
         $escala->save();
-        return redirect()->route('home')->with('mensagem', 'Escala cadastrada com sucesso');
-
+        return redirect()->route('escala')->with('mensagem', 'Escala cadastrada com sucesso');
     }
 
     /**
@@ -75,16 +91,15 @@ class EscalaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $escala = User::find($id);
+        $escala = Escala::find($request->input('id'));
         $escala->data = $request->input('data');
         $escala->nr_agentes = $request->input('nr_agentes');
-        $escala->locais = $request->input('locais');
+        $escala->local = $request->input('local');
         $escala->chefe_grupo = $request->input('chefe_grupo');
         $escala->save();
-        return redirect()->route('utilizador')->with('mensagem', 'Utilizador atuzlizado com sucesso!');
-
+        return redirect()->route('escala')->with('mensagem', 'Escala atuzlizada com sucesso!');
     }
 
     /**
@@ -95,6 +110,7 @@ class EscalaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::delete('Delete from escala where id = ?', [$id]);
+        return redirect()->route('escala')->with('mensagem', 'Escala eliminada com sucesso!');
     }
 }

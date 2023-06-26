@@ -18,13 +18,13 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('categoria')->nullable();
             $table->integer('anos_xp')->nullable();
-            $table->date('ano_ingresso')->nullable();
-            $table->integer('idade')->nullable();
+            $table->integer('ano_ingresso')->nullable();
+            $table->date('dataNascimento')->nullable();
             $table->string('sexo')->nullable();
             $table->string('nivelAcesso')->nullable();
             $table->string('funcao')->nullable();
-            $table->integer('telefone')->nullable();
-            $table->date('inicio_funcoes')->nullable();
+            $table->string('telefone')->nullable();
+            //$table->date('inicio_funcoes')->nullable();
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

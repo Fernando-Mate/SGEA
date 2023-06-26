@@ -23,8 +23,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $utilizador = $this->objUtilizador->all();
-        return view('funcionarios', compact('utilizador'));
+        $utilizadores = $this->objUtilizador->all()->where('nivelAcesso', '=', 'agente');
+        //return dump($utilizadores);
+        return view('Agentes', compact('utilizadores'));
 
     }
 
@@ -51,12 +52,15 @@ class UserController extends Controller
         $utilizador->categoria = $request->input('categoria');
         $utilizador->anos_xp = $request->input('anos_xp');
         $utilizador->ano_ingresso = $request->input('ano_ingresso');
-        $utilizador->idade = $request->input('idade');
+        $utilizador->dataNascimento = $request->input('dataNascimento');
+        $utilizador->telefone = $request->input('telefone');
+        $utilizador->email = $request->input('email');
+        $utilizador->funcao = $request->input('funcao');
         $utilizador->sexo = $request->input('sexo');
-        $utilizador->password = Hash::make();
-        $utilizador->nivelAcesso = 'funcioario';
+        $utilizador->password = Hash::make('1234'. $request->input('nome'));
+        $utilizador->nivelAcesso = 'agente';
         $utilizador->save();
-        return redirect()->route('home')->with('mensagem', 'Funcionario cadastrado com sucesso');
+        return redirect()->route('funcionario')->with('mensagem', 'Agente cadastrado com sucesso');
 
     }
     public function storeAdmin(Request $request)
@@ -93,17 +97,20 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $utilizador = User::find($id);
+        $utilizador = User::find($request->id);
         $utilizador->name = $request->input('nome');
         $utilizador->categoria = $request->input('categoria');
         $utilizador->anos_xp = $request->input('anos_xp');
         $utilizador->ano_ingresso = $request->input('ano_ingresso');
-        $utilizador->idade = $request->input('idade');
+        $utilizador->dataNascimento = $request->input('dataNascimento');
+        $utilizador->telefone = $request->input('telefone');
+        $utilizador->funcao = $request->input('funcao');
         $utilizador->sexo = $request->input('sexo');
+        $utilizador->nivelAcesso = 'agente';
         $utilizador->save();
-        return redirect()->route('utilizador')->with('mensagem', 'Utilizador atuzlizado com sucesso!');
+        return redirect()->route('funcionario')->with('mensagem', 'Agente atuzlizado com sucesso!');
 
     }
 
@@ -115,8 +122,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        DB::delete('Delete from User where id = ?', [$id]);
-        return redirect()->route('utilizador')->with('mensagem', 'Utilizador eliminado com sucesso!');
+        DB::delete('Delete from users where id = ?', [$id]);
+        return redirect()->route('funcionario')->with('mensagem', 'Agente eliminado com sucesso!');
 
     }
 
