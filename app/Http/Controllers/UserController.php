@@ -141,9 +141,12 @@ class UserController extends Controller
             $alocacao = new Alocar();
             $alocacao->escala_id = $escalaId;
             $alocacao->user_id = $agenteId;
-            $alocacao->save();
 
-            DB::update('update users set estado = 1 where id = ?', ['id' => $agenteId]);
+            if($alocacao->save()){
+                DB::table('users')
+                ->where('id', $agenteId)
+                ->update(['estado' => 1]);
+            }
 
             return redirect()->route('alocacao')->with('mensagem', 'O agente alocado com sucesso.');
         } else {

@@ -26,7 +26,7 @@ class AlocarController extends Controller
      */
     public function index()
     {
-        $utilizadores = $this->objUtilizador->all()->where('nivelAcesso', '=', 'agente');
+        $utilizadores = $this->objUtilizador->all()->where('nivelAcesso', 'agente')->where('estado', 0);
         $escalas = $this->objEscala->all();
         $escala_agente = $this->objEscalaAgente->all();
         return view('Alocacao', compact('utilizadores', 'escalas', 'escala_agente'));

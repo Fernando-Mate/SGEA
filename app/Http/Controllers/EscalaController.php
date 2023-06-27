@@ -25,7 +25,9 @@ class EscalaController extends Controller
      */
     public function index()
     {
-        $utilizadores = $this->objUtilizador->all()->where('nivelAcesso', '=', 'agente');
+        //$utilizadores = $this->objUtilizador->all()->where('nivelAcesso', '=', 'agente');
+        $utilizadores = DB::select("select * from users where (nivelAcesso = 'agente') && (? - ano_ingresso  > 3) && (estado = 0)", [date('Y')]);
+
         $escalas = DB::table('escala')
             ->join('users', 'users.id', '=', 'escala.chefe_grupo')
             ->select('escala.*', 'users.name')
@@ -58,7 +60,11 @@ class EscalaController extends Controller
         $escala->nr_agentes = $request->input('nr_agentes');
         $escala->local = $request->input('local');
         $escala->chefe_grupo = $request->input('chefe_grupo');
-        $escala->save();
+        if($escala->save()){
+            DB::table('users')
+                ->where('id', $request->input('chefe_grupo'))
+                ->update(['estado' => 1]);
+        }
         return redirect()->route('escala')->with('mensagem', 'Escala cadastrada com sucesso');
     }
 
