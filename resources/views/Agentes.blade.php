@@ -11,6 +11,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th>Codigo</th>
                     <th>Nome</th>
                     <th>Categoria</th>
                     <th>Ano de Ingresso</th>
@@ -20,12 +21,14 @@
                     <th>Função</th>
                     <th>Telefone</th>
                     <th>Email</th>
+                    <th>Estado</th>
                     <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($utilizadores as $user)
                     <tr>
+                        <td>{{$user->id}}</td>
                         <td>{{$user->name}}</td>
                         <td>{{$user->categoria}}</td>
                         <td>{{$user->ano_ingresso}}</td>
@@ -35,6 +38,7 @@
                         <td>{{$user->funcao}}</td>
                         <td>{{$user->telefone}}</td>
                         <td>{{$user->email}}</td>
+                        <td>{{$user->estado}}</td>
                         <td>
                             <button class="btn btn-primary btnEditar" data-bs-toggle="modal" data-bs-target="#addAgenteModal{{$user->id}}"><i class="bi bi-pencil-square"></i></button>
                             <a href="{{route('deleteAgente', ['id' => $user->id])}}" class="btn btn-danger btnEliminar"><i class="bi bi-trash"></i></a>

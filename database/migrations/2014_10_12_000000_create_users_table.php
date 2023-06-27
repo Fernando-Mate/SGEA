@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('nivelAcesso')->nullable();
             $table->string('funcao')->nullable();
             $table->string('telefone')->nullable();
+            $table->tinyInteger('estado')->default(0);
             //$table->date('inicio_funcoes')->nullable();
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();

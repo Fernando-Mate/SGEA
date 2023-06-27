@@ -31,7 +31,7 @@ Route::get('/escala', [EscalaController::class, 'index'])->name('escala');
 Route::get('/deleteEscala/{id}', [EscalaController::class, 'destroy'])->name('deleteEscala');
 
 //Alocação
-Route::post('/usuarios/{usuario}/departamentos/add', [UserController::class, 'addToEscala'])->name('usuarios.departamentos.add');
+Route::post('/alocar', [UserController::class, 'addToEscala'])->name('alocar');
 Route::post('/usuarios/{usuario}/departamentos/remove', [UserController::class, 'removeFromEscala'])->name('usuarios.departamentos.remove');
 Route::get('/alocacao', [AlocarController::class, 'index'])->name('alocacao');
 

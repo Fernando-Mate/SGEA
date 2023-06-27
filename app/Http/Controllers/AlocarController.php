@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alocar;
 use App\Models\Escala;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -11,10 +12,12 @@ class AlocarController extends Controller
 
     private $objUtilizador;
     private $objEscala;
+    private $objEscalaAgente;
     public function __construct()
     {
         $this->objUtilizador = new User();
         $this->objEscala = new Escala();
+        $this->objEscalaAgente = new Alocar();
     }
     /**
      * Display a listing of the resource.
@@ -25,7 +28,8 @@ class AlocarController extends Controller
     {
         $utilizadores = $this->objUtilizador->all()->where('nivelAcesso', '=', 'agente');
         $escalas = $this->objEscala->all();
-        return view('Alocacao', compact('utilizadores', 'escalas'));
+        $escala_agente = $this->objEscalaAgente->all();
+        return view('Alocacao', compact('utilizadores', 'escalas', 'escala_agente'));
     }
 
     /**

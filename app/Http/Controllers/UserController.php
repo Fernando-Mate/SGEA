@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alocar;
 use App\Models\Escala;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -128,21 +129,25 @@ class UserController extends Controller
     }
 
 
-    public function addToEscala(Request $request, User $usuario)
+    public function addToEscala(Request $request)
     {
-        $escalaId = $request->input('escala_id');
+        $escalaId = $request->input('escala');
+        $agenteId = $request->input('agente');
 
-        if ($usuario->Escala->isEmpty()) {
-            $escala = Escala::find($escalaId);
+        $agente = User::all()->where('id', '=', $agenteId)->first();
 
-            if ($escala) {
-                $usuario->Escala()->attach($escala);
-            }
+        if ($agente->estado == 0) {
 
-            return redirect()->back();
+            $alocacao = new Alocar();
+            $alocacao->escala_id = $escalaId;
+            $alocacao->user_id = $agenteId;
+            $alocacao->save();
+
+            DB::update('update users set estado = 1 where id = ?', ['id' => $agenteId]);
+
+            return redirect()->route('alocacao')->with('mensagem', 'O agente alocado com sucesso.');
         } else {
-            return redirect()->route('home')->with('mensagem', 'Usuario ja esta associado a uma Escala');
-
+            return redirect()->route('alocacao')->with('mensagem', 'O agente encontra-se indisponivel.');
         }
     }
 

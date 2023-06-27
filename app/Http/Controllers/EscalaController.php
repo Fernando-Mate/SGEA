@@ -56,7 +56,7 @@ class EscalaController extends Controller
         $escala = new Escala();
         $escala->data = $request->input('data');
         $escala->nr_agentes = $request->input('nr_agentes');
-        $escala->local = $request->input('locais');
+        $escala->local = $request->input('local');
         $escala->chefe_grupo = $request->input('chefe_grupo');
         $escala->save();
         return redirect()->route('escala')->with('mensagem', 'Escala cadastrada com sucesso');
