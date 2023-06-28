@@ -7,6 +7,12 @@
             <ul class="topbar-menu">
                 @if (Gate::allows('agente'))
                     <li class="topbar-item">
+                        <a class="topbar-link" href="{{ route('alocacao') }}">
+                            <i class="bi bi-people-fill"></i>
+                            <span>Alocação</span>
+                        </a>
+                    </li>
+                    <li class="topbar-item">
                         <a class="topbar-link" href="{{ route('funcionario') }}">
                             <i class="bi bi-person-circle"></i>
                             <span>Agentes</span>
@@ -26,6 +32,19 @@
                         <a class="topbar-link" href="{{ route('alocacao') }}">
                             <i class="bi bi-people-fill"></i>
                             <span>Alocação</span>
+                        </a>
+                    </li>
+                    <li class="topbar-item">
+                        <a class="topbar-link" href="{{ route('funcionario') }}">
+                            <i class="bi bi-person-circle"></i>
+                            <span>Agentes</span>
+                        </a>
+                    </li>
+                    <!-- Topbar Item -->
+                    <li class="topbar-item">
+                        <a class="topbar-link" href="{{ route('escala') }}">
+                            <i class="bi bi-list-ul"></i>
+                            <span>Escalas</span>
                         </a>
                     </li>
                 @endif

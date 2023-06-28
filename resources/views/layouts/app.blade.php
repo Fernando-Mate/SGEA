@@ -10,7 +10,15 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fonts -->
+    <title>{{ config('app.name', 'Laravel') }}</title>
+    <link href="{{ asset('site/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/index.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/dataTables.bootstrap5.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+        integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
         integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
 
@@ -28,34 +36,34 @@
         }
 
         .topbar {
-        background-color: #fff;
-        padding: 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+            background-color: #fff;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    .topbar-menu {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: flex;
-    }
+        .topbar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
 
-    .topbar-item {
-        margin-right: 20px;
-    }
+        .topbar-item {
+            margin-right: 20px;
+        }
 
-    .topbar-link {
-        display: flex;
-        align-items: center;
-        color: #000;
-        text-decoration: none;
-    }
+        .topbar-link {
+            display: flex;
+            align-items: center;
+            color: #000;
+            text-decoration: none;
+        }
 
-    .topbar-link i {
-        margin-right: 5px;
-    }
+        .topbar-link i {
+            margin-right: 5px;
+        }
     </style>
     <!-- Scripts -->
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
@@ -130,10 +138,16 @@
 
         <script src="{{ asset('site/jquery.js') }}"></script>
         <script src="{{ asset('site/jquery.dataTables.js') }}"></script>
-        <script src="{{ asset('js/jquery-3.5.1.js') }}"></script>
-        <script src="{{ asset('js/dataTables.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.tabledit.js') }}"></script>
+        <script src="{{ asset('js/dataTables.bootstrap5.min.js') }}"></script>
         <script src="{{ asset('site/bootstrap.js') }}"></script>
         <script src="{{ asset('dashboard/js/dash2.js') }}"></script>
+        <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('.table').DataTable();
+            })
+        </script>
     </div>
 </body>
 

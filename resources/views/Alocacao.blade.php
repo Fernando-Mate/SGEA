@@ -1,43 +1,70 @@
 @extends('home')
 
 @section('conteudo')
-    <div>
-        <!-- Botão Adicionar Escala -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEscalaModal">
-            <i class="bi bi-plus"></i> Alocar
-        </button>
 
-        {{ csrf_field() }}
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Código da Alocacao</th>
-                    <th>Escala</th>
-                    <th>Agente</th>
-                    <th>Data</th>
-                    <th>Chefe do grupo</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($escala_agente as $alocacao)
+
+    @if (Gate::allows('agente'))
+        <div class="card mt-2">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title">Alocacao</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">{teste</p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>Valor:</span>
+                        <span>MZN 67</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>Condutor:</span>
+                        <span>teste</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    @endif
+
+
+    @if (Gate::allows('admin'))
+        <div>
+            <!-- Botão Adicionar Escala -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEscalaModal">
+                <i class="bi bi-plus"></i> Alocar
+            </button>
+
+            {{ csrf_field() }}
+            <table class="table table-striped">
+                <thead>
                     <tr>
-                        <td scope="row">1</td>
-                        <td>{{ $alocacao->local }}</td>
-                        <td>{{ $alocacao->name }}</td>
-                        <td>{{ $alocacao->data }}</td>
-                        <td>{{ $alocacao->chefe_grupo }}</td>
-                        <td>
-                            <button data-bs-toggle="modal" data-bs-target="#addEscalaModal"
-                                class="btn btn-primary btnEditar"><i class="bi bi-pencil-square"></i></button>
-                            <a href="#" class="btn btn-danger btnEliminar"><i class="bi bi-trash"></i></a>
-                        </td>
-
+                        <th>Código da Alocacao</th>
+                        <th>Escala</th>
+                        <th>Agente</th>
+                        <th>Data</th>
+                        <th>Chefe do grupo</th>
+                        <th>Ações</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                    @foreach ($escala_agente as $alocacao)
+                        <tr>
+                            <td scope="row">1</td>
+                            <td>{{ $alocacao->local }}</td>
+                            <td>{{ $alocacao->name }}</td>
+                            <td>{{ $alocacao->data }}</td>
+                            <td>{{ $alocacao->chefe_grupo }}</td>
+                            <td>
+                                <button data-bs-toggle="modal" data-bs-target="#addEscalaModal"
+                                    class="btn btn-primary btnEditar"><i class="bi bi-pencil-square"></i></button>
+                                <a href="#" class="btn btn-danger btnEliminar"><i class="bi bi-trash"></i></a>
+                            </td>
+
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    @endif
+
 
     <!-- Modal Adicionar Escala -->
     <div class="modal fade" id="addEscalaModal" tabindex="-1" aria-labelledby="addEscalaModalLabel" aria-hidden="true">

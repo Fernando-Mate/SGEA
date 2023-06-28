@@ -3,7 +3,7 @@
 @section('conteudo')
     <div>
         <!-- Botão Adicionar Agente -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAgenteModal">
+        <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#addAgenteModal">
             <i class="bi bi-plus"></i> Adicionar Agente
         </button>
 
@@ -22,7 +22,9 @@
                     <th>Telefone</th>
                     <th>Email</th>
                     <th>Estado</th>
-                    <th>Ações</th>
+                    @if (Gate::allows('admin'))
+                        <th>Ações</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -39,10 +41,12 @@
                         <td>{{$user->telefone}}</td>
                         <td>{{$user->email}}</td>
                         <td>{{$user->estado}}</td>
+                        @if(Gate::allows('admin'))
                         <td>
                             <button class="btn btn-primary btnEditar" data-bs-toggle="modal" data-bs-target="#addAgenteModal{{$user->id}}"><i class="bi bi-pencil-square"></i></button>
                             <a href="{{route('deleteAgente', ['id' => $user->id])}}" class="btn btn-danger btnEliminar"><i class="bi bi-trash"></i></a>
                         </td>
+                        @endif
                     </tr>
 
                     <div class="modal fade" id="addAgenteModal{{$user->id}}" tabindex="-1" aria-labelledby="addAgenteModalLabel" aria-hidden="true">

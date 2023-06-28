@@ -186,7 +186,7 @@ class UserController extends Controller
         $utilizador = new User();
         $utilizador->name = 'administrador';
         $utilizador->email = 'admin@gmail.com';
-        $utilizador->nivelAcesso = 'Admin';
+        $utilizador->nivelAcesso = 'admin';
         $utilizador->password = Hash::make('1234');
         $utilizador->save();
         return redirect()->route('login');

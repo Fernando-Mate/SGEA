@@ -3,10 +3,15 @@
 @section('conteudo')
     <div>
         <!-- Botão Adicionar Escala -->
+        @if (Gate::allows('agente'))
+        <button type="button" hidden class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEscalaModal">
+            <i class="bi bi-plus"></i> Adicionar Escala
+        </button>
+        @elseif (Gate::allows('admin'))
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEscalaModal">
             <i class="bi bi-plus"></i> Adicionar Escala
         </button>
-
+        @endif
         {{ csrf_field() }}
         <table class="table table-striped">
             <thead>
