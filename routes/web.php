@@ -23,6 +23,7 @@ Route::post('/addAdmin', [UserController::class, 'storeAdmin'])->name('addAdmin'
 Route::get('/funcionario', [UserController::class, 'index'])->name('funcionario');
 Route::get('/deleteAgente/{id}', [UserController::class, 'destroy'])->name('deleteAgente');
 Route::post('/updateAgente', [UserController::class, 'update'])->name('updateUser');
+Route::get('/admin', [UserController::class, 'admin'])->name('admin');
 
 //ROUTAS DAS ESCALAS
 Route::post('/addEscala', [EscalaController::class, 'storeEscala'])->name('addEscala');

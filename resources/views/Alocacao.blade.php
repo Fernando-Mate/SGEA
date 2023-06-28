@@ -14,6 +14,7 @@
                     <th>Código da Alocacao</th>
                     <th>Escala</th>
                     <th>Agente</th>
+                    <th>Data</th>
                     <th>Chefe do grupo</th>
                     <th>Ações</th>
                 </tr>
@@ -21,11 +22,11 @@
             <tbody>
                 @foreach ($escala_agente as $alocacao)
                     <tr>
-
                         <td scope="row">1</td>
-                        <td>{{ $alocacao->escala_id }}</td>
-                        <td>{{ $alocacao->user_id }}</td>
-                        <td>Pedro</td>
+                        <td>{{ $alocacao->local }}</td>
+                        <td>{{ $alocacao->name }}</td>
+                        <td>{{ $alocacao->data }}</td>
+                        <td>{{ $alocacao->chefe_grupo }}</td>
                         <td>
                             <button data-bs-toggle="modal" data-bs-target="#addEscalaModal"
                                 class="btn btn-primary btnEditar"><i class="bi bi-pencil-square"></i></button>

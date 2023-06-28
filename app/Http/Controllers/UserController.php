@@ -72,7 +72,7 @@ class UserController extends Controller
         $utilizador->telefone = $request->input('telefone');
         $utilizador->inicio_funcoes = $request->input('inicio_funcoes');
         $utilizador->password = Hash::make();
-        $utilizador->nivelAcesso = 'Administrador';
+        $utilizador->nivelAcesso = 'admin';
         $utilizador->save();
         return redirect()->route('home')->with('mensagem', 'Administrador cadastrado com sucesso');
 
@@ -136,20 +136,28 @@ class UserController extends Controller
 
         $agente = User::all()->where('id', '=', $agenteId)->first();
 
+        $agentesAssociados = DB::table('escala_user')
+        ->where('escala_id', $escalaId)
+        ->count();
         if ($agente->estado == 0) {
 
             $alocacao = new Alocar();
             $alocacao->escala_id = $escalaId;
             $alocacao->user_id = $agenteId;
+            if($agentesAssociados >= 3){
+                return redirect()->route('alocacao')->with('mensagem', 'ja tem 3 agentes nessa escala.');
 
-            if($alocacao->save()){
-                DB::table('users')
-                ->where('id', $agenteId)
-                ->update(['estado' => 1]);
+            }else{
+                if($alocacao->save()){
+                    DB::table('users')
+                    ->where('id', $agenteId)
+                    ->update(['estado' => 1]);
+                }
+
+                return redirect()->route('alocacao')->with('mensagem', 'O agente alocado com sucesso.');
+
             }
-
-            return redirect()->route('alocacao')->with('mensagem', 'O agente alocado com sucesso.');
-        } else {
+             } else {
             return redirect()->route('alocacao')->with('mensagem', 'O agente encontra-se indisponivel.');
         }
     }
@@ -173,5 +181,16 @@ class UserController extends Controller
 
         return view('usuario.show', compact('usuario', 'escalasDisponiveis'));
     }
+
+    public function admin(){
+        $utilizador = new User();
+        $utilizador->name = 'administrador';
+        $utilizador->email = 'admin@gmail.com';
+        $utilizador->nivelAcesso = 'Admin';
+        $utilizador->password = Hash::make('1234');
+        $utilizador->save();
+        return redirect()->route('login');
+    }
+
 
 }
