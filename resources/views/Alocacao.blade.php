@@ -2,7 +2,10 @@
 
 @section('conteudo')
 
-@foreach ($utilizadores as $users)
+
+
+
+
     @if (Gate::allows('agente'))
 
         <div class="card mt-2">
@@ -10,22 +13,25 @@
                 <h5 class="card-title">Alocacao</h5>
             </div>
             <div class="card-body">
-                <p class="card-text">{{$users->name}}</p>
+                <p class="card-text"></p>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span>Local da Escala:</span>
-                        <span>a</span>
+                        <span>Colegas de posto:</span>
+                        <span>{{ $usersList }}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span>Chefe do grupo:</span>
-                        <span>a</span>
+                        <span>Local:</span>
+                        <span>{{$escala->local}}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>Data:</span>
+                        <span>{{$escala->data}}</span>
                     </li>
                 </ul>
             </div>
         </div>
-
     @endif
-    @endforeach
+
 
     @if (Gate::allows('admin'))
         <div>
@@ -57,7 +63,7 @@
                             <td>
                                 <button data-bs-toggle="modal" data-bs-target="#addEscalaModal"
                                     class="btn btn-primary btnEditar"><i class="bi bi-pencil-square"></i></button>
-                                <a href="#" class="btn btn-danger btnEliminar"><i class="bi bi-trash"></i></a>
+                                <a href="{{route('deleteAlocacao', ['escala_id' => $alocacao->escala_id, 'user_id' => $alocacao->user_id])}}" class="btn btn-danger btnEliminar"><i class="bi bi-trash"></i></a>
                             </td>
 
                         </tr>

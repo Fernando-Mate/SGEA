@@ -33,14 +33,45 @@ class AlocarController extends Controller
         //$escala_agente = $this->objEscalaAgente->all();
         $escala_agente = DB::table('escala_user')
             ->join('users', 'users.id', '=', 'escala_user.user_id')
-            ->join('escala', 'escala.id', '=','escala_user.escala_id')
-            ->select('escala.*', 'users.name')
+            ->join('escala', 'escala.id', '=', 'escala_user.escala_id')
+            ->select('escala.*', 'users.name', 'escala_user.*')
             ->get();
 
 
+        $userId = Auth::id();
 
-           // return dump($escala_agente);
-        return view('Alocacao', compact('utilizadores', 'escalas', 'escala_agente'));
+        $query = DB::table('escala_user')
+            ->select('escala_id')
+            ->where('user_id', $userId)
+            ->first();
+
+
+        if ($query) {
+            $users = DB::table('escala_user')
+                ->join('users', 'escala_user.user_id', '=', 'users.id')
+                ->select(DB::raw("GROUP_CONCAT(users.name SEPARATOR ', ') as users"))
+                ->where('escala_id', $query->escala_id)
+                ->where('user_id', '!=', $userId)
+                ->first();
+
+            $escala = DB::table('escala')
+                    ->select('local', 'data')
+                    ->where('id', $query->escala_id)->first();
+
+
+            if ($users && is_object($users) && property_exists($users, 'users')) {
+                $usersList = $users->users;
+            } else {
+                $usersList = 'Nenhum usuário encontrado';
+            }
+        } else {
+            $usersList = 'Nenhum usuário encontrado';
+        }
+
+
+
+        //return dump($users, $escala);
+        return view('Alocacao', compact('utilizadores', 'escalas', 'escala_agente', 'usersList', 'escala'));
     }
 
     /**
@@ -104,8 +135,12 @@ class AlocarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($user_id, $escala_id)
     {
-        //
+        DB::delete('Delete from escala_user where (user_id = ?) && (escala_id = ?)', [$user_id, $escala_id]);
+        DB::table('users')
+            ->where('id', $user_id)
+            ->update(['estado' => 0]);
+        return redirect()->route('alocacao')->with('mensagem', 'Alocacao eliminada com sucesso!');
     }
 }

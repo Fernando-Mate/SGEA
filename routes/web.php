@@ -35,6 +35,8 @@ Route::get('/deleteEscala/{id}', [EscalaController::class, 'destroy'])->name('de
 Route::post('/alocar', [UserController::class, 'addToEscala'])->name('alocar');
 Route::post('/usuarios/{usuario}/departamentos/remove', [UserController::class, 'removeFromEscala'])->name('usuarios.departamentos.remove');
 Route::get('/alocacao', [AlocarController::class, 'index'])->name('alocacao');
+Route::get('/deleteAlocacao/{user_id}/{escala_id}', [AlocarController::class, 'destroy'])->name('deleteAlocacao');
+
 
 Auth::routes();
 
