@@ -2,28 +2,30 @@
 
 @section('conteudo')
 
-
+@foreach ($utilizadores as $users)
     @if (Gate::allows('agente'))
+
         <div class="card mt-2">
             <div class="card-header bg-primary text-white">
                 <h5 class="card-title">Alocacao</h5>
             </div>
             <div class="card-body">
-                <p class="card-text">{teste</p>
+                <p class="card-text">{{$users->name}}</p>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span>Valor:</span>
-                        <span>MZN 67</span>
+                        <span>Local da Escala:</span>
+                        <span>a</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span>Condutor:</span>
-                        <span>teste</span>
+                        <span>Chefe do grupo:</span>
+                        <span>a</span>
                     </li>
                 </ul>
             </div>
         </div>
-    @endif
 
+    @endif
+    @endforeach
 
     @if (Gate::allows('admin'))
         <div>

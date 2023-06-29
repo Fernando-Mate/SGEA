@@ -6,6 +6,7 @@ use App\Models\Alocar;
 use App\Models\Escala;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AlocarController extends Controller
@@ -32,9 +33,11 @@ class AlocarController extends Controller
         //$escala_agente = $this->objEscalaAgente->all();
         $escala_agente = DB::table('escala_user')
             ->join('users', 'users.id', '=', 'escala_user.user_id')
-            ->join('escala', 'escala.id', '=', 'escala_user.escala_id')
+            ->join('escala', 'escala.id', '=','escala_user.escala_id')
             ->select('escala.*', 'users.name')
             ->get();
+
+
 
            // return dump($escala_agente);
         return view('Alocacao', compact('utilizadores', 'escalas', 'escala_agente'));
