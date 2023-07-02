@@ -16,6 +16,10 @@
                 <p class="card-text"></p>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>Chefe do Grupo:</span>
+                        <span>{{$escala->name}}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
                         <span>Colegas de posto:</span>
                         <span>{{ $usersList }}</span>
                     </li>

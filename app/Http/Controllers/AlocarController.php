@@ -30,12 +30,12 @@ class AlocarController extends Controller
     {
         $utilizadores = $this->objUtilizador->all()->where('nivelAcesso', 'agente')->where('estado', 0);
         $escalas = $this->objEscala->all();
-        //$escala_agente = $this->objEscalaAgente->all();
-        $escala_agente = DB::table('escala_user')
-            ->join('users', 'users.id', '=', 'escala_user.user_id')
-            ->join('escala', 'escala.id', '=', 'escala_user.escala_id')
-            ->select('escala.*', 'users.name', 'escala_user.*')
-            ->get();
+        $escala_agente = $this->objEscalaAgente->all();
+        // $escala_agente = DB::table('escala_user')
+        //     ->join('users', 'users.id', '=', 'escala_user.user_id')
+        //     ->join('escala', 'escala.id', '=', 'escala_user.escala_id')
+        //     ->select('escala.*', 'users.name', 'escala_user.*')
+        //     ->get();
 
 
         $userId = Auth::id();
@@ -55,8 +55,9 @@ class AlocarController extends Controller
                 ->first();
 
             $escala = DB::table('escala')
-                    ->select('local', 'data')
-                    ->where('id', $query->escala_id)->first();
+                    ->join('users', 'users.id', '=', 'escala.chefe_grupo')
+                    ->select('escala.local', 'escala.data', 'users.name')
+                    ->where('escala.id', $query->escala_id)->first();
 
 
             if ($users && is_object($users) && property_exists($users, 'users')) {
@@ -71,7 +72,7 @@ class AlocarController extends Controller
 
 
         //return dump($users, $escala);
-        return view('Alocacao', compact('utilizadores', 'escalas', 'escala_agente', 'usersList', 'escala'));
+        return view('Alocacao', compact('utilizadores', 'escalas', 'usersList', 'escala', 'escala_agente'));
     }
 
     /**
